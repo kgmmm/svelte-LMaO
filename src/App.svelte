@@ -52,6 +52,8 @@
 
   let currentContentType = "";
 
+  $: transform = currentContentType != "";
+
   let currentID = "";
   let currentTitle = "";
   let currentText = "";
@@ -119,13 +121,14 @@
   }
 
   function deletedOpenFile() {
+    currentFile.set("");
     currentContentType = "";
   }
 </script>
 
 <Normalize />
 
-<main>
+<main class:transform>
   <button class="theme" on:click={toggleTheme}>
     {#if theme == "dark"}
       <svg
@@ -190,6 +193,23 @@
       <h2>LMaO</h2>
     </div>
   {/if}
+  {#if transform}
+    <button class="backbtn" on:click={deletedOpenFile}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-arrow-left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+        />
+      </svg>
+    </button>
+  {/if}
 </main>
 
 <style lang="scss">
@@ -198,9 +218,11 @@
     place-items: center;
     padding: var(--grid-gap);
     color: var(--color-1);
+    overflow-x: hidden;
   }
 
   main {
+    --switch: 0;
     width: 100%;
     height: 100%;
     max-height: calc(100vh - calc(var(--grid-gap) * 2));
@@ -211,6 +233,51 @@
     grid-template-areas:
       "theme list content"
       "menu list content";
+    transition: transform var(--duration) var(--timing-function);
+    position: relative;
+
+    &.transform {
+      --switch: -1;
+
+      & button.backbtn {
+        opacity: 100%;
+      }
+    }
+
+    @media (max-width: 880px) {
+      grid-template-columns:
+        var(--col-1-size) calc(
+          calc(100vw - var(--col-1-size)) - calc(var(--grid-gap) * 3)
+        )
+        calc(100vw - calc(var(--grid-gap) * 2));
+      transform: translateX(
+        calc(var(--switch) * calc(100vw - var(--grid-gap)))
+      );
+    }
+
+    & button.backbtn {
+      width: var(--col-1-size);
+      height: var(--col-1-size);
+      background: var(--base-2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 20%);
+      border: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      opacity: 0%;
+      transition: opacity var(--duration) var(--timing-function) var(--duration);
+
+      & svg {
+        width: 50%;
+        height: 50%;
+        fill: white;
+      }
+    }
 
     & button.theme {
       grid-area: theme;

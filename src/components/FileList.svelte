@@ -31,7 +31,6 @@
 
   function deleteListItem(event) {
     if (event.detail == $currentFile) {
-      currentFile.set("");
       dispatch("deletedOpenFile");
     }
     files.update((currentFiles) => {
