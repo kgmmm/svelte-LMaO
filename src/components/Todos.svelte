@@ -115,7 +115,8 @@
     margin: 0;
     margin-bottom: var(--grid-gap);
     padding: 0 3px;
-    width: 370px;
+    width: 100%;
+    max-width: 370px;
     height: 40px;
     color: var(--color-1);
     background: var(--main-fg);
@@ -128,10 +129,11 @@
   }
 
   span {
-    max-width: max-content;
+    width: 100%;
+    max-width: 370px;
     display: grid;
     place-items: center;
-    grid-template-columns: 40px 300px 30px;
+    grid-template-columns: 40px 1fr 30px;
     grid-template-rows: 40px;
 
     & input[type="checkbox"] {

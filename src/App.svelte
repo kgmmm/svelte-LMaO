@@ -218,14 +218,13 @@
     place-items: center;
     padding: var(--grid-gap);
     color: var(--color-1);
-    overflow-x: hidden;
   }
 
   main {
     --switch: 0;
     width: 100%;
-    height: 100%;
-    max-height: calc(100vh - calc(var(--grid-gap) * 2));
+    height: calc(100% - calc(var(--grid-gap) * 2));
+    max-height: calc(100% - calc(var(--grid-gap) * 2));
     display: grid;
     grid-template-columns: var(--col-1-size) var(--col-2-size) 1fr;
     grid-template-rows: var(--col-1-size) 1fr;
@@ -234,17 +233,21 @@
       "theme list content"
       "menu list content";
     transition: transform var(--duration) var(--timing-function);
-    position: relative;
+    position: fixed;
+    top: var(--grid-gap);
+    left: var(--grid-gap);
+    z-index: 899;
 
     &.transform {
       --switch: -1;
 
       & button.backbtn {
         opacity: 100%;
+        transform: translateX(100vw);
       }
     }
 
-    @media (max-width: 880px) {
+    @media screen and (max-width: 880px) {
       grid-template-columns:
         var(--col-1-size) calc(
           calc(100vw - var(--col-1-size)) - calc(var(--grid-gap) * 3)
@@ -256,16 +259,18 @@
     }
 
     & button.backbtn {
+      margin: 0;
+      padding: 0;
       width: var(--col-1-size);
       height: var(--col-1-size);
       background: var(--base-2);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 20%);
+      // box-shadow: 0 0 10px rgba(0, 0, 0, 20%);
       border: none;
-      border-radius: 50%;
+      border-radius: 50% 0 0 50%;
       display: grid;
       place-items: center;
       cursor: pointer;
-      position: fixed;
+      position: absolute;
       bottom: 20px;
       right: 20px;
       z-index: 999;
