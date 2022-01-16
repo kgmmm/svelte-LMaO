@@ -222,9 +222,6 @@
 
   main {
     --switch: 0;
-    width: 100%;
-    height: calc(100% - calc(var(--grid-gap) * 2));
-    max-height: calc(100% - calc(var(--grid-gap) * 2));
     display: grid;
     grid-template-columns: var(--col-1-size) var(--col-2-size) 1fr;
     grid-template-rows: var(--col-1-size) 1fr;
@@ -235,7 +232,9 @@
     transition: transform var(--duration) var(--timing-function);
     position: fixed;
     top: var(--grid-gap);
+    bottom: var(--grid-gap);
     left: var(--grid-gap);
+    right: var(--grid-gap);
     z-index: 899;
 
     &.transform {
@@ -264,15 +263,14 @@
       width: var(--col-1-size);
       height: var(--col-1-size);
       background: var(--base-2);
-      // box-shadow: 0 0 10px rgba(0, 0, 0, 20%);
       border: none;
       border-radius: 50% 0 0 50%;
       display: grid;
       place-items: center;
       cursor: pointer;
       position: absolute;
-      bottom: 20px;
-      right: 20px;
+      bottom: 15px;
+      right: 0px;
       z-index: 999;
       opacity: 0%;
       transition: opacity var(--duration) var(--timing-function) var(--duration);
